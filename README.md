@@ -19,7 +19,7 @@ score-text init song.score.yaml
 score-text render song.score.yaml -o song.pdf
 ```
 
-npm registry 发布正在等待账号登录验证。发布后可按包名安装：
+也可从 npm registry 按包名安装：
 
 ```sh
 npm install -g score-text
@@ -28,7 +28,7 @@ score-text validate song.score.yaml --json
 score-text render song.score.yaml -o song.pdf --json
 ```
 
-发布到 npm registry 后，也可以免全局安装运行：
+也可以免全局安装运行：
 
 ```sh
 npx --yes score-text init song.score.yaml

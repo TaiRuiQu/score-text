@@ -11,6 +11,16 @@
 
 需要 Node.js 20 或更新版本，不需要模型 API、浏览器、LilyPond 或系统字体。
 
+当前可直接安装 GitHub Release 中的正式打包文件：
+
+```sh
+npm install -g https://github.com/tairuiqu/score-text/releases/download/v0.1.0/score-text-0.1.0.tgz
+score-text init song.score.yaml
+score-text render song.score.yaml -o song.pdf
+```
+
+npm registry 发布正在等待账号登录验证。发布后可按包名安装：
+
 ```sh
 npm install -g score-text
 score-text init song.score.yaml
@@ -18,7 +28,7 @@ score-text validate song.score.yaml --json
 score-text render song.score.yaml -o song.pdf --json
 ```
 
-也可以免全局安装运行：
+发布到 npm registry 后，也可以免全局安装运行：
 
 ```sh
 npx --yes score-text init song.score.yaml

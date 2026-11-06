@@ -1,12 +1,27 @@
 {
   "name": "score-text",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Agent-friendly text scores: numbered notation, guitar TAB, piano and drums.",
   "author": "TaiRuiQu",
-  "repository": { "type": "git", "url": "git+https://github.com/tairuiqu/score-text.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaiRuiQu/score-text.git"
+  },
   "homepage": "https://github.com/tairuiqu/score-text#readme",
-  "bugs": { "url": "https://github.com/tairuiqu/score-text/issues" },
-  "keywords": ["music", "notation", "jianpu", "tablature", "sheet-music", "cli", "agents", "lyrics", "musicxml"],
+  "bugs": {
+    "url": "https://github.com/tairuiqu/score-text/issues"
+  },
+  "keywords": [
+    "music",
+    "notation",
+    "jianpu",
+    "tablature",
+    "sheet-music",
+    "cli",
+    "agents",
+    "lyrics",
+    "musicxml"
+  ],
   "type": "module",
   "bin": {
     "score-text": "dist/cli.js"
@@ -14,7 +29,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
     "dist",
@@ -41,7 +60,10 @@
     "node": ">=20"
   },
   "license": "MIT",
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "commander": "^14.0.0",

@@ -22,6 +22,7 @@ try {
   await writeFile(join(scratch,'package.json'),'{"private":true,"type":"module"}\n');
   run([npmCli,'install','--omit=dev','--no-audit','--no-fund',join(scratch,pack.filename)]);
   const cli=join(scratch,'node_modules','score-text','dist','cli.js');
+  assert.equal(run([cli,'--version']).trim(),pack.version);
   run([cli,'init','song.score.yaml','--template','ensemble']);
   const validation=JSON.parse(run([cli,'validate','song.score.yaml','--json']));
   assert.equal(validation.ok,true);

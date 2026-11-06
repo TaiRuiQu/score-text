@@ -11,16 +11,6 @@
 
 需要 Node.js 20 或更新版本，不需要模型 API、浏览器、LilyPond 或系统字体。
 
-当前可直接安装 GitHub Release 中的正式打包文件：
-
-```sh
-npm install -g https://github.com/tairuiqu/score-text/releases/download/v0.1.0/score-text-0.1.0.tgz
-score-text init song.score.yaml
-score-text render song.score.yaml -o song.pdf
-```
-
-也可从 npm registry 按包名安装：
-
 ```sh
 npm install -g score-text
 score-text init song.score.yaml
@@ -34,6 +24,8 @@ score-text render song.score.yaml -o song.pdf --json
 npx --yes score-text init song.score.yaml
 npx --yes score-text render song.score.yaml -o song.pdf
 ```
+
+也可从 GitHub [Releases](https://github.com/tairuiqu/score-text/releases) 下载 `.tgz` 文件，使用 `npm install -g ./score-text.tgz` 安装。
 
 ## 效果示例
 
@@ -150,6 +142,8 @@ uv run --with lxml --with pymupdf python scripts/verify-exports.py
 自动化测试覆盖时值、歌词校验、多声部、转拍、连音、渐变速度、独立 MIDI 解码、所有导出格式和 CLI。最后一条命令使用 W3C 官方 MusicXML 4.0 XSD 验证实际导出，并重新栅格化 PDF 到 `tmp/qa/`。
 
 调研与设计理由见 [`docs/research.md`](docs/research.md)。代码是 TypeScript，入口 API 见 [`src/index.ts`](src/index.ts)。
+
+版本发布使用 GitHub Actions：推送与 `package.json` 版本一致的 `v*` 标签后，自动完成 Windows / Ubuntu 验证、npm OIDC 可信发布和 GitHub Release 附件上传。操作步骤见 [`docs/publishing.md`](docs/publishing.md)。
 
 ## 范围
 

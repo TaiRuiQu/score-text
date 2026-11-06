@@ -1,0 +1,153 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing version tag, for example v0.1.1'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Check tag and package version
+        run: node scripts/check-release.mjs
+      - run: npm ci
+      - run: npm run check
+      - run: npm run smoke:package
+      - run: npm run demo
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install lxml pymupdf
+      - run: python scripts/verify-exports.py
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: Use npm with trusted publishing support
+        run: npm install --global npm@11
+      - id: version
+        run: node scripts/check-release.mjs
+      - run: npm ci
+      - run: npm run build
+      - run: npm run demo
+      - name: Prepare installable package and release attachments
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          npm pack --ignore-scripts --pack-destination output
+          mv "output/score-text-${VERSION}.tgz" output/score-text.tgz
+          cp examples/*.score.yaml output/
+          cd output
+          sha256sum score-text.tgz *.pdf *.score.yaml > SHA256SUMS.txt
+      - name: Check whether this exact package is already published
+        id: registry
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          import assert from 'node:assert/strict';
+          const { name, version } = JSON.parse(readFileSync('package.json', 'utf8'));
+          const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent(name)}/${version}`);
+          let published = false;
+          if (response.status !== 404) {
+            assert.ok(response.ok, `Registry check failed: ${response.status}`);
+            const metadata = await response.json();
+            const integrity = 'sha512-' + createHash('sha512').update(readFileSync('output/score-text.tgz')).digest('base64');
+            assert.equal(metadata.dist.integrity, integrity, 'This npm version already exists with different contents');
+            published = true;
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `published=${published}\n`);
+          NODE
+      - name: Publish to npm using OIDC
+        if: steps.registry.outputs.published != 'true'
+        env:
+          NPM_TAG: ${{ steps.version.outputs.npm_tag }}
+        run: npm publish ./output/score-text.tgz --access public --provenance --tag "$NPM_TAG"
+      - name: Verify public registry integrity
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          import assert from 'node:assert/strict';
+          const { name, version } = JSON.parse(readFileSync('package.json', 'utf8'));
+          const expected = 'sha512-' + createHash('sha512').update(readFileSync('output/score-text.tgz')).digest('base64');
+          for (let attempt = 0; ; attempt++) {
+            const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent(name)}/${version}`);
+            if (response.ok) {
+              assert.equal((await response.json()).dist.integrity, expected);
+              console.log(`${name}@${version}: public registry integrity verified`);
+              break;
+            }
+            assert.ok(attempt < 23, `Registry verification failed: ${response.status}`);
+            console.log(`Waiting for public registry (${response.status})...`);
+            await new Promise(resolve => setTimeout(resolve, 10000));
+          }
+          NODE
+      - name: Prepare release notes
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
+          const changes = readFileSync('CHANGELOG.md', 'utf8').split(/^## /m).find(part => part.startsWith(`${version} `));
+          const body = changes ? changes.split('\n').slice(1).join('\n').trim() : '';
+          writeFileSync('output/release-notes.md', `${body}\n\n## Install\n\n\`\`\`sh\nnpm install -g score-text@${version}\nscore-text init song.score.yaml\nscore-text render song.score.yaml -o song.pdf\n\`\`\`\n\nIncludes an installable package, four example PDFs, source YAML and SHA-256 checksums. npm publication uses OIDC with provenance.\n`);
+          NODE
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NPM_TAG: ${{ steps.version.outputs.npm_tag }}
+        run: |
+          assets=(output/score-text.tgz output/*.pdf output/*.score.yaml output/SHA256SUMS.txt)
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" "${assets[@]}" --clobber
+            gh release edit "$RELEASE_TAG" --notes-file output/release-notes.md
+          else
+            flags=(--latest)
+            if [ "$NPM_TAG" = next ]; then flags=(--prerelease); fi
+            gh release create "$RELEASE_TAG" "${assets[@]}" --verify-tag --title "score-text $RELEASE_TAG" --notes-file output/release-notes.md "${flags[@]}"
+          fi
+          printf 'Published **%s** to [npm](https://www.npmjs.com/package/score-text) and [GitHub Releases](https://github.com/%s/releases/tag/%s).\n' "$RELEASE_TAG" "$GH_REPO" "$RELEASE_TAG" >> "$GITHUB_STEP_SUMMARY"

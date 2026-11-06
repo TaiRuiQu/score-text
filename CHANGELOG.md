@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 — 2026-11-06
+
+- Automated tag releases with Windows / Ubuntu validation, npm trusted publishing,
+  provenance, example PDFs, source YAML and SHA-256 release checksums.
+- Release tags and lockfile versions are checked before publishing; reruns only
+  accept an existing npm version when the package integrity matches exactly.
+- CLI version now follows package.json automatically.
+
 ## 0.1.0 — 2026-11-06
 
 First public release.

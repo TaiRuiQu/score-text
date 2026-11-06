@@ -9,7 +9,8 @@ import { exportScore, type Format } from './export.js';
 import { ScoreError } from './model.js';
 
 const root=new URL('../',import.meta.url);
-const program=new Command().name('score-text').description('纯文本多声部乐谱排版 / Agent-friendly score engraving').version('0.1.0');
+const packageInfo=JSON.parse(await readFile(new URL('package.json',root),'utf8')) as {version:string};
+const program=new Command().name('score-text').description('纯文本多声部乐谱排版 / Agent-friendly score engraving').version(packageInfo.version);
 async function input(file:string):Promise<string> {
   if(file!=='-')return readFile(file,'utf8');
   let text='';for await(const chunk of process.stdin){text+=chunk.toString();if(text.length>5_000_000)throw new Error('stdin 超过 5 MB');}return text;

@@ -1,0 +1,70 @@
+version: 1
+title: 城市微光
+subtitle: Original pop study · 扫弦与歌词
+composer: Score Text
+key: G
+meter: 4/4
+tempo: 108
+layout:
+  barsPerSystem: 4
+  lyricSize: 25
+  height: 1754
+tracks:
+  guitar: { type: tab, mode: strum }
+  vocal: { type: numbered, lyrics: true }
+patterns:
+  groove:
+    guitar: "down/8 r/8 down/8 r/8 down/8 r/8 down/4"
+  sync:
+    guitar: "r/8 down/8 r/8 down/8 down/4 r/8 up/8"
+bars:
+  - use: groove
+    chords: G
+    vocal: { notes: "0/4 0/4 0/4 0/4", lyrics: "_ _ _ _" }
+  - use: sync
+    chords: Em
+    vocal: { notes: "0/4 0/8 3/8 3/4 3/4", lyrics: "_ _ I walk on" }
+  - use: groove
+    chords: C
+    vocal: { notes: "3/2. 4/8 2/8~", lyrics: "roads of light" }
+  - use: sync
+    chords: D
+    vocal: { notes: "2/2 0/8 2/8 1/8 5v/8", lyrics: "_ _ Stars will shine" }
+  - use: groove
+    chords: G
+    vocal: { notes: "2/4 2/8 1/8 3/4 5v/8 6v/8~", lyrics: "rise when we sing the word" }
+  - use: sync
+    chords: Em
+    vocal: { notes: "6v/8 3/8 3/8 3/8 3/4 3/8 3/8", lyrics: "_ Now in the morn- ing I" }
+  - use: groove
+    chords: C
+    vocal: { notes: "3/2. 4/8 2/8~", lyrics: "wake a- lone" }
+  - use: sync
+    chords: D
+    vocal: { notes: "2/2 0/8 2/8 2/8 5v/8", lyrics: "_ _ Walk through the" }
+  - use: groove
+    chords: G
+    vocal: { notes: "2/4 2/4 2/4 3/8 1/8", lyrics: "streets we call our own" }
+  - use: sync
+    chords: Em
+    vocal: { notes: "7v/8 6v/8 6v/4 0/4 0/4", lyrics: "夜 色 深 _ _" }
+  - use: groove
+    chords: C
+    vocal: { notes: "0/4 0/4 0/4 0/4", lyrics: "_ _ _ _" }
+  - use: sync
+    chords: D
+    vocal: { notes: "0/4 0/4 0/4 0/4", lyrics: "_ _ _ _" }
+  - use: groove
+    chords: G
+    repeatStart: true
+    vocal: { notes: "5/4 6/4 5/4 3/4", lyrics: "We keep mov- ing" }
+  - use: sync
+    chords: Em
+    vocal: { notes: "2/4 3/4 2/4 1/4", lyrics: "追 着 那 束" }
+  - use: groove
+    chords: C
+    vocal: { notes: "4/4 3/4 2/4 1/4", lyrics: "光 走 向 远" }
+  - use: sync
+    chords: D
+    repeatEnd: true
+    vocal: { notes: "2/2 1/2", lyrics: "方 向" }

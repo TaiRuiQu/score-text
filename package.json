@@ -1,0 +1,62 @@
+{
+  "name": "score-text",
+  "version": "0.1.0",
+  "description": "Agent-friendly text scores: numbered notation, guitar TAB, piano and drums.",
+  "author": "TaiRuiQu",
+  "repository": { "type": "git", "url": "git+https://github.com/tairuiqu/score-text.git" },
+  "homepage": "https://github.com/tairuiqu/score-text#readme",
+  "bugs": { "url": "https://github.com/tairuiqu/score-text/issues" },
+  "keywords": ["music", "notation", "jianpu", "tablature", "sheet-music", "cli", "agents", "lyrics", "musicxml"],
+  "type": "module",
+  "bin": {
+    "score-text": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" }
+  },
+  "files": [
+    "dist",
+    "assets",
+    "schema",
+    "examples",
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/cli.ts",
+    "test": "tsx --test test/*.test.ts",
+    "demo": "tsx scripts/demo.ts",
+    "check": "npm run build && npm test",
+    "schema:generate": "tsx scripts/generate-schema.ts",
+    "smoke:package": "npm run build && node scripts/verify-package.mjs",
+    "prepublishOnly": "npm run check",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "commander": "^14.0.0",
+    "fontkit": "^2.0.4",
+    "pdfkit": "^0.17.2",
+    "svg-to-pdfkit": "^0.1.8",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@tonejs/midi": "^2.0.28",
+    "@types/node": "^22.0.0",
+    "@types/pdfkit": "^0.17.0",
+    "ajv": "^8.20.0",
+    "fast-xml-parser": "^5.12.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

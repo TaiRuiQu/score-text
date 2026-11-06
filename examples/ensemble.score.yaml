@@ -1,0 +1,77 @@
+version: 1
+title: 潮汐之间
+subtitle: Pop ensemble · 4/4 → 6/8 → 3/4 · Original study
+composer: Score Text
+key: C
+meter: 4/4
+tempo: 96
+layout:
+  barsPerSystem: 2
+  lyricSize: 23
+  showTrackNames: true
+  showBarNumbers: true
+  systemGap: 35
+tracks:
+  melody: { type: numbered, name: 人声, lyrics: true }
+  guitar: { type: tab, name: 吉他, mode: frets }
+  piano: { type: piano, name: 钢琴 }
+  drums: { type: drums, name: 鼓 }
+patterns:
+  common:
+    guitar: "5:3/8 4:2/8 3:0/8 2:1/8 1:0/8 2:1/8 3:0/8 2:1/8"
+    piano:
+      right: "[C4,E4,G4]/2 [D4,F4,A4]/2"
+      left: "C3/4 G2/4 C3/4 G2/4"
+    drums:
+      voices:
+        - { id: top, notes: "hat/8 hat/8 [hat,snare]/8 hat/8 hat/8 hat/8 [hat,snare]/8 hat/8" }
+        - { id: bass, notes: "kick/4 r/4 kick/4 r/4" }
+  compound:
+    guitar: "5:0/8 3:2/8 2:1/8 1:0/8 2:1/8 3:2/8"
+    piano:
+      right: "[C4,E4,A4]/4. [D4,F4,A4]/4."
+      left: "A2/4. E3/4."
+    drums: "[kick,hat]/8 hat/8 snare/8 [kick,hat]/8 hat/8 snare/8"
+bars:
+  - use: common
+    section: Verse
+    chords: C
+    melody: { notes: "1/4 2/8 3/8 5/4 3/4", lyrics: "潮 水 穿 过 城" }
+  - use: common
+    chords: [{ name: F, beat: 1 }, { name: G, beat: 3 }]
+    tempoChanges:
+      - { beat: 3, bpm: 104, text: "poco accel." }
+    melody: { notes: "4/8 3/8 2/4 5/4~ 5/4", lyrics: "市 的 晨 光 _" }
+  - use: compound
+    meter: 6/8
+    tempo: { bpm: 72, unit: "4." }
+    section: Bridge
+    chords: Am
+    melody: { notes: "6v/8 1/8 2/8 3/4.", lyrics: "我 们 还 在" }
+  - use: compound
+    chords: F
+    ramp: { to: 84, bars: 1, text: "accel. 72 → 84" }
+    melody: { notes: "4/4. 3/8 2/8 1/8", lyrics: "路 上 等 风" }
+  - meter: 3/4
+    tempo: 120
+    section: Chorus
+    chords: G
+    guitar: "6:3/8 4:0/8 3:0/8 2:0/8 1:3/4"
+    melody:
+      voices:
+        - { id: lead, notes: "5/4 6/4 1^/4", lyrics: "向 天 唱" }
+        - { id: harmony, notes: "3/4 4/4 5/4", lyrics: "轻 轻 唱" }
+    piano:
+      voices:
+        - { id: melody, staff: right, notes: "G4/4 A4/4 C5/4" }
+        - { id: inner, staff: right, notes: "D4/2." }
+        - { id: bass, staff: left, notes: "G2/2." }
+    drums: "[kick,crash]/4 snare/4 [kick,hat]/4"
+  - chords: C
+    ramp: { to: 80, bars: 1, text: "rit. 120 → 80" }
+    guitar: "[5:3,4:2,3:0,2:1,1:0]/2."
+    melody: { notes: "3/4 2/4 1/4", lyrics: "迎 微 光" }
+    piano:
+      right: "[C4,E4,G4]/2."
+      left: "C3/2."
+    drums: "[kick,hat]/4 snare/4 crash/4"

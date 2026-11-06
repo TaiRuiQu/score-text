@@ -1,0 +1,101 @@
+# 原创演示旋律与歌词；复现参考图片的版式，不转录原歌曲。
+version: 1
+title: Chasing the Light
+artist: Score Text
+composer: Original demo
+arranger: score-text
+key: E
+meter: 4/4
+tempo: 122
+capo: 4
+fingering: C
+layout:
+  barsPerSystem: 3
+  systemGap: 30
+  lyricSize: 26
+  lyricFont: sans
+  height: 1754
+tracks:
+  guitar: { type: tab, mode: cross, name: 吉他 }
+  vocal: { type: numbered, lyrics: true, name: 人声 }
+patterns:
+  am:
+    guitar: "5:0/8 3:0/8 [1:0,2:0]/8 3:0/8 5:0/8 3:0/8 [1:0,2:0]/8 3:0/8"
+  c:
+    guitar: "5:0/8 3:0/8 [1:0,2:0]/8 3:0/8 5:0/8 3:0/8 [1:0,2:0]/8 3:0/8"
+  g:
+    guitar: "6:0/8 4:0/8 [2:0,3:0]/8 4:0/8 6:0/8 4:0/8 [2:0,3:0]/8 4:0/8"
+  f:
+    guitar: "6:0/8 4:0/8 [2:0,3:0]/8 4:0/8 6:0/8 4:0/8 [2:0,3:0]/8 4:0/8"
+bars:
+  - use: am
+    chords: Am
+    vocal:
+      notes: "2/4 3/4 5/4 2/4"
+      lyrics: [Late-, ly, we, wander]
+  - use: c
+    chords: C
+    vocal:
+      notes:
+        - { pitch: 2, duration: 8 }
+        - { pitch: 3, duration: 8 }
+        - { pitch: 2, duration: 8 }
+        - { pitch: 1, duration: 8 }
+        - { pitch: 3, duration: 8, tie: true }
+        - { pitch: 3, duration: "4." }
+      lyrics: [We, keep, chas-, ing, light, _]
+  - use: g
+    chords: G
+    vocal:
+      notes: "0/8 2/8 2/8 3/8 4/8~ 4/8 3/8 1/8"
+      lyrics: [_, Dream, of, the, o-, _, pen, sky]
+  - use: f
+    chords: F
+    vocal:
+      notes:
+        - { pitch: 3, duration: 4 }
+        - { pitch: 6, duration: 4 }
+        - { pitch: "1^", duration: 4, slur: start }
+        - { pitch: "1^", duration: 8, slur: stop }
+        - { pitch: 6, duration: 8 }
+      lyrics: [We, could, fly, _, so]
+  - use: am
+    chords: Am
+    vocal:
+      notes: "2/4 3/4 5/4 3/4"
+      lyrics: [far, be-, yond, home]
+  - use: c
+    chords: C
+    vocal:
+      notes: "2/8 3/8 2/8 1/8 3/4~ 3/4"
+      lyrics: [We, keep, sing-, ing, on, _]
+  - use: g
+    chords: G
+    vocal:
+      notes: "5/4 5/8 6/8 5/4 3/4"
+      lyrics: [Roads, are, call-, ing, now]
+  - use: f
+    chords: F
+    vocal:
+      notes: "4/4 4/4 3/8 2/8 1/4"
+      lyrics: [Night, turns, in-, to, dawn]
+  - use: c
+    chords: C
+    vocal:
+      notes: "3/4 2/4 1/2"
+      lyrics: [Lead, us, home]
+  - use: am
+    chords: Am
+    vocal:
+      notes: "6v/4 1/4 2/8 3/8 5/4"
+      lyrics: [星, 光, 落, 在, 肩]
+  - use: f
+    chords: F
+    vocal:
+      notes: "4/4 3/4 2/4 1/4"
+      lyrics: [风, 吹, 过, 原]
+  - use: c
+    chords: C
+    vocal:
+      notes: "2/8 3/8 2/4 1/2"
+      lyrics: [陪, 我, 走, 远]

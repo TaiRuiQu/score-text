@@ -1,0 +1,72 @@
+# 欢乐颂：常见 16 小节主题的 C 大调简化旋律。
+# 旋律核对：https://piano-play.still-coding.com/en/library/ode/
+# 中文为本示例自拟配词，用于展示歌词排版，并非通行译词。
+version: 1
+title: 欢乐颂
+subtitle: Ode to Joy · 主题旋律
+key: C
+meter: 4/4
+tempo: 104
+note: 贝多芬作曲 · C调简化版 · 中文为自拟示例配词
+layout:
+  width: 1240
+  height: 1000
+  margin: 50
+  barsPerSystem: 4
+  systemGap: 55
+  titleSize: 44
+  noteSize: 36
+  lyricSize: 26
+  lyricFont: serif
+  chordDiagrams: false
+tracks:
+  melody: { type: numbered, lyrics: true, name: 旋律 }
+bars:
+  - melody:
+      notes: "3/4 3/4 4/4 5/4"
+      lyrics: [欢, 乐, 歌, 声]
+  - melody:
+      notes: "5/4 4/4 3/4 2/4"
+      lyrics: [飞, 向, 天, 边]
+  - melody:
+      notes: "1/4 1/4 2/4 3/4"
+      lyrics: [晨, 风, 吹, 过]
+  - melody:
+      notes: "3/4. 2/8 2/2"
+      lyrics: [绿, 草, 原]
+  - melody:
+      notes: "3/4 3/4 4/4 5/4"
+      lyrics: [你, 我, 携, 手]
+  - melody:
+      notes: "5/4 4/4 3/4 2/4"
+      lyrics: [走, 过, 山, 川]
+  - melody:
+      notes: "1/4 1/4 2/4 3/4"
+      lyrics: [让, 这, 歌, 声]
+  - melody:
+      notes: "2/4. 1/8 1/2"
+      lyrics: [传, 更, 远]
+  - melody:
+      notes: "2/4 2/4 3/4 1/4"
+      lyrics: [每, 个, 微, 笑]
+  - melody:
+      notes: "2/4 3/8 4/8 3/4 1/4"
+      lyrics: [都, 像, 那, 星, 光]
+  - melody:
+      notes: "2/4 3/8 4/8 3/4 2/4"
+      lyrics: [每, 颗, 心, 都, 闪]
+  - melody:
+      notes: "1/4 2/4 5v/2"
+      lyrics: [着, 光, 芒]
+  - melody:
+      notes: "3/4 3/4 4/4 5/4"
+      lyrics: [欢, 乐, 歌, 声]
+  - melody:
+      notes: "5/4 4/4 3/4 2/4"
+      lyrics: [飞, 向, 天, 边]
+  - melody:
+      notes: "1/4 1/4 2/4 3/4"
+      lyrics: [愿, 这, 世, 界]
+  - melody:
+      notes: "2/4. 1/8 1/2"
+      lyrics: [更, 温, 暖]
